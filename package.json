@@ -2,13 +2,14 @@
   "name": "jsfridge",
   "version": "0.1.0",
   "description": "Convert HTML containing DOM changes at load time with JavaScript to static one with changes applied.",
-  "main": "main.js",
+  "main": "./dist/main.js",
   "type": "module",
   "scripts": {
-    "test": "node main.js --input=test/index.html"
+    "build": "tsc",
+    "test": "tsc && node ./dist/main.js --input=test/index.html"
   },
   "bin": {
-      "jsfridge": "main.js"
+    "jsfridge": "./dist/main.js"
   },
   "repository": {
     "type": "git",
@@ -21,7 +22,10 @@
   },
   "homepage": "https://github.com/u1F992/jsfridge#readme",
   "dependencies": {
-    "jsdom": "^22.1.0",
     "puppeteer": "^20.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.5",
+    "typescript": "^5.1.3"
   }
 }

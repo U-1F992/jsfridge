@@ -11,6 +11,7 @@ Convert HTML containing DOM changes at load time with JavaScript to static one w
 <script defer>
     document.body.textContent = "Hello World";
 </script>
+<script defer src="index.js"></script>
 </html>
 ```
 
@@ -20,7 +21,8 @@ Convert HTML containing DOM changes at load time with JavaScript to static one w
 <figcaption>output</figcaption>
 
 ```html
-<html><head></head><body>Hello World
+<html><head></head><body style="background-color: rgb(128, 128, 128);">Hello World
+
 
 </body></html>
 ```
