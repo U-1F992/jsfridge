@@ -6,44 +6,40 @@ import url from "url";
 
 import puppeteer from "puppeteer";
 
-function parseArgumentValue(args: string[], optionName: string) {
-    const option = args.find(arg => arg.startsWith(`${optionName}=`));
-    return option ? option.split("=")[1] : null;
-}
-
 function parseArguments() {
     const args = process.argv.slice(2);
-    const input = parseArgumentValue(args, "--input");
-    const output = parseArgumentValue(args, "--output");
-    return { input, output };
+    return { input: args.at(0), output: args.at(1) };
 }
 
-async function stabilizeScripts(input: url.URL) {
+function fileExists(path: string) {
+    return fs.existsSync(path) && fs.lstatSync(path).isFile();
+}
+
+async function freezeScripts(input: url.URL) {
     const browser = await puppeteer.launch({ headless: "new" });
     try {
         const page = await browser.newPage();
         await page.goto(input.href);
         await page.evaluate(`document.querySelectorAll("script").forEach(tag => tag.remove());`);
         return await page.content();
-
     } finally {
         await browser.close();
     }
 }
 
 const { input, output } = parseArguments();
-if (input === null) {
+if (typeof input === "undefined") {
     throw new Error("No input file specified.");
 }
 const inputFile = path.resolve(input);
-if (!(fs.existsSync(inputFile) && fs.lstatSync(inputFile).isFile())) {
+if (!fileExists(inputFile)) {
     throw new Error(`Input file "${inputFile}" is missing.`);
 }
 
 const inputURL = url.pathToFileURL(inputFile);
-const html = await stabilizeScripts(inputURL);
+const html = await freezeScripts(inputURL);
 
-if (output === null) {
+if (typeof output === "undefined") {
     console.log(html);
 } else {
     const outputFile = path.resolve(output);

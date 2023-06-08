@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "test": "tsc && node ./dist/main.js --input=test/index.html"
+    "test": "tsc && node ./dist/main.js test/index.html"
   },
   "bin": {
     "jsfridge": "./dist/main.js"
