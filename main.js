@@ -10,7 +10,7 @@ import puppeteer from "puppeteer";
 
 function parseArgumentValue(args, optionName) {
     const option = args.find(arg => arg.startsWith(`${optionName}=`));
-    return option ? option.split('=')[1] : "";
+    return option ? option.split('=')[1] : null;
 }
 
 function removeScriptTags(html) {
@@ -22,22 +22,24 @@ function removeScriptTags(html) {
 
 const args = process.argv.slice(2);
 
-const input = path.resolve(parseArgumentValue(args, '--input'));
-assert(fs.existsSync(input), "Input file is missing.");
+const input = parseArgumentValue(args, '--input');
+assert.notStrictEqual(input, null, "No input file specified.");
+const inputFile = path.resolve(input);
+assert.ok(fs.existsSync(inputFile) && fs.lstatSync(inputFile).isFile(), "Input file is missing.");
 
-const rawOutput = parseArgumentValue(args, '--output');
-const output = path.resolve(rawOutput);
+const output = parseArgumentValue(args, '--output');
 
 const browser = await puppeteer.launch({ headless: "new" });
 try {
     const page = await browser.newPage();
-    await page.goto(url.pathToFileURL(input));
+    await page.goto(url.pathToFileURL(inputFile));
     const html = removeScriptTags(await page.content());
 
-    if (rawOutput === "") {
+    if (output === null) {
         console.log(html);
     } else {
-        fs.writeFileSync(output, html);
+        const outputFile = path.resolve(output);
+        fs.writeFileSync(outputFile, html);
     }
 } finally {
     await browser.close();
