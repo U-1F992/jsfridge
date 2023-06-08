@@ -1,4 +1,4 @@
-# js-fridge
+# jsfridge
 
 Convert HTML containing DOM changes at load time with JavaScript to static one with changes applied.
 
