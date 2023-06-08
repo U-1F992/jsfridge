@@ -3,11 +3,19 @@ import fs from "fs";
 import path from "path";
 import url from "url";
 
+import { JSDOM } from "jsdom";
 import puppeteer from "puppeteer";
 
 function parseArgumentValue(args, optionName) {
     const option = args.find(arg => arg.startsWith(`${optionName}=`));
     return option ? option.split('=')[1] : "";
+}
+
+function removeScriptTags(html) {
+    const dom = new JSDOM(html);
+    const { document } = dom.window;
+    document.querySelectorAll("script").forEach(tag => tag.remove());
+    return dom.serialize();
 }
 
 const args = process.argv.slice(2);
@@ -22,7 +30,7 @@ const browser = await puppeteer.launch({ headless: "new" });
 try {
     const page = await browser.newPage();
     await page.goto(url.pathToFileURL(input));
-    const html = await page.content();
+    const html = removeScriptTags(await page.content());
 
     if (rawOutput === "") {
         console.log(html);
