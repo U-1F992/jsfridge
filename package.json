@@ -1,7 +1,7 @@
 {
   "name": "js-fridge",
   "version": "0.1.0",
-  "description": "Convert HTML containing DOM changes at load time with JavaScript to static file with changes applied.",
+  "description": "Convert HTML containing DOM changes at load time with JavaScript to static one with changes applied.",
   "main": "main.js",
   "type": "module",
   "scripts": {

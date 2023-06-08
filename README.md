@@ -1,6 +1,6 @@
 # js-fridge
 
-Convert HTML containing DOM changes at load time with JavaScript to static file with changes applied.
+Convert HTML containing DOM changes at load time with JavaScript to static one with changes applied.
 
 <figure>
 <figcaption>input</figcaption>
