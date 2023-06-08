@@ -1,0 +1,23 @@
+{
+  "name": "js-fridge",
+  "version": "0.1.0",
+  "description": "Convert HTML containing DOM changes at load time with JavaScript to static file with changes applied.",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "test": "node main.js --input=test/index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/u1F992/js-fridge.git"
+  },
+  "author": "Koutaro Mukai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/u1F992/js-fridge/issues"
+  },
+  "homepage": "https://github.com/u1F992/js-fridge#readme",
+  "dependencies": {
+    "puppeteer": "^20.5.0"
+  }
+}
