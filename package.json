@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
+    "prepare": "npm run build",
     "test": "tsc && node ./dist/main.js test/index.html"
   },
   "bin": {
